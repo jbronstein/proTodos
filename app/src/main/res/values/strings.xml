@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">proTodos</string>
+    <string name="action_settings">Action setting</string>
+    <string name="title_activity_todo">TITLE HERE</string>
+    <string name="todo_title_hint">Enter a title for the todo</string>
+    <string name="todo_title_label">TITLE:</string>
+    <string name="todo_details_label">DETAILS:</string>
+    <string name="todo_solved_label">DONE:</string>
+
+</resources>
