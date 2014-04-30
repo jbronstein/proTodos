@@ -20,6 +20,11 @@ public class Todo {
         mDate = new Date();
     }
 
+    @Override
+    public String toString(){
+        return mTitle;
+    }
+
     public UUID getID() {
         return mId;
     }

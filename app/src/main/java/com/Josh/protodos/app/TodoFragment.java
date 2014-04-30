@@ -18,10 +18,13 @@ import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import java.util.UUID;
 
 
 public class TodoFragment extends Fragment {
 
+
+    public static final String EXTRA_TODO_ID = "com.Josh.protodos.todo_id";
     private Todo mTodo;
     private EditText mTitleField;
     private Button mDateButton;
@@ -31,14 +34,31 @@ public class TodoFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mTodo = new Todo();
+
+        UUID todoId = (UUID)getArguments().getSerializable(EXTRA_TODO_ID);
+
+        mTodo = TodoList.get(getActivity()).getTodo(todoId);
     }
+
+    public static TodoFragment newInstance(UUID todoId){
+        Bundle args = new Bundle();
+        args.putSerializable(EXTRA_TODO_ID, todoId);
+
+        TodoFragment fragment = new TodoFragment();
+        fragment.setArguments(args);
+
+        return fragment;
+    }
+
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_todo, parent, false);
 
         mTitleField=(EditText)v.findViewById(R.id.todo_title);
+        mTitleField.setText(mTodo.getTitle());
         mTitleField.addTextChangedListener(new TextWatcher(){
             public void onTextChanged (
                     CharSequence c,int start, int before, int count){
@@ -60,6 +80,7 @@ public class TodoFragment extends Fragment {
         mDateButton.setEnabled(false);
 
         mSolvedCheckBox = (CheckBox)v.findViewById(R.id.todo_solved);
+        mSolvedCheckBox.setChecked(mTodo.isSolved());
         mSolvedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
