@@ -18,6 +18,7 @@ public class Todo {
            //generate unique identifier
         mId = UUID.randomUUID();
         mDate = new Date();
+        mSolved = false;
     }
 
     @Override

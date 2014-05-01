@@ -3,6 +3,7 @@ package com.Josh.protodos.app;
 import android.content.Context;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -14,15 +15,9 @@ public class TodoList {
     private static TodoList sTodoList;
     private Context mAppContext;
 
-    private TodoList(Context appContext) {
+    public TodoList(Context appContext) {
         mAppContext = appContext;
         mTodos = new ArrayList<Todo>();
-        for (int i = 0; i < 100; i++){
-            Todo t = new Todo();
-            t.setTitle("Crime #" + i);
-            t.setSolved(i % 2 == 0);
-            mTodos.add(t);
-        }
     }
 
     public static TodoList get(Context c){
@@ -30,6 +25,10 @@ public class TodoList {
             sTodoList = new TodoList(c.getApplicationContext());
         }
         return sTodoList;
+    }
+
+    public void addTodo(Todo t) {
+        mTodos.add(t);
     }
 
     public ArrayList<Todo> getTodos(){
@@ -42,6 +41,7 @@ public class TodoList {
                 return t;
         }
         return null;
+
     }
 
 }

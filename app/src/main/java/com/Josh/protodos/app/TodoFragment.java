@@ -33,6 +33,7 @@ public class TodoFragment extends Fragment {
 
     private Todo mTodo;
     private EditText mTitleField;
+    private EditText mDetailsField;
     private Button mDateButton;
     private CheckBox mSolvedCheckBox;
 
@@ -82,6 +83,25 @@ public class TodoFragment extends Fragment {
             }
         });
 
+
+        mDetailsField=(EditText)v.findViewById(R.id.details_text);
+        mDetailsField.setText(mTodo.getDetails());
+        mDetailsField.addTextChangedListener(new TextWatcher(){
+            public void onTextChanged (
+                    CharSequence c,int start, int before, int count){
+                mTodo.setDetails(c.toString());
+            }
+
+            public void beforeTextChanged(
+                    CharSequence c, int start, int count, int after) {
+                // This space intentionally left blank
+            }
+
+            public void afterTextChanged(Editable c) {
+                // This one too
+            }
+        });
+
         mDateButton = (Button)v.findViewById(R.id.todo_date);
         updateDate();
         mDateButton.setOnClickListener(new View.OnClickListener() {
@@ -118,9 +138,5 @@ public class TodoFragment extends Fragment {
         }
 
     }
-
-
-
-
 
 }

@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -26,9 +29,11 @@ public class TodoListFragment extends ListFragment {
     private ArrayList<Todo> mTodos;
     private static final String TAG = "TodoListFragment";
 
-    @Override
+
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+
         getActivity().setTitle(R.string.todos_title);
         mTodos = TodoList.get(getActivity()).getTodos();
 
@@ -36,7 +41,6 @@ public class TodoListFragment extends ListFragment {
         setListAdapter(adapter);
     }
 
-    @Override
     public void onListItemClick(ListView l, View v, int position, long id){
         Todo t = ((TodoAdapter)getListAdapter()).getItem(position);
 
@@ -57,16 +61,12 @@ public class TodoListFragment extends ListFragment {
             if (convertView == null){
                 convertView = getActivity().getLayoutInflater().inflate(R.layout.list_item_todo, null);
             }
-            //Configure view for this Todo item
+
             Todo t = getItem(position);
 
             TextView titleTextView =
                     (TextView)convertView.findViewById(R.id.todo_list_item_titleTextView);
             titleTextView.setText(t.getTitle());
-
-            TextView dateTextView =
-                    (TextView)convertView.findViewById(R.id.todo_list_item_dateTextView);
-            dateTextView.setText(t.getDate().toString());
 
             CheckBox solvedCheckBox =
                     (CheckBox)convertView.findViewById(R.id.todo_list_item_solvedCheckBox);
@@ -85,6 +85,29 @@ public class TodoListFragment extends ListFragment {
         ((TodoAdapter)getListAdapter()).notifyDataSetChanged();
 
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_todo_list, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.menu_item_new_todo:
+                Todo todo = new Todo();
+                TodoList.get(getActivity()).addTodo(todo);
+                Intent i = new Intent(getActivity(), TodoPagerActivity.class);
+                i.putExtra(TodoFragment.EXTRA_TODO_ID, todo.getID());
+                startActivityForResult(i, 0);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
+
 
 
 }
