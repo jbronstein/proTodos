@@ -5,20 +5,24 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.DatePicker;
+import android.widget.TextView;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-/**
- * Created by Josh on 4/30/14.
- */
+
 public class DatePickerFragment extends DialogFragment {
-    public static final String EXTRA_DATE = "com.Josh.android.protodos.app.date";
+
+    public static final String EXTRA_DATE = "com.Josh.protodos.app.date";
 
     private Date mDate;
 
@@ -79,6 +83,6 @@ public class DatePickerFragment extends DialogFragment {
                             }
                         })
                 .create();
-        }
+    }
 
 }

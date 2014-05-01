@@ -88,8 +88,7 @@ public class TodoFragment extends Fragment {
             public void onClick(View v) {
                 FragmentManager fm = getActivity()
                         .getSupportFragmentManager();
-                DatePickerFragment dialog = DatePickerFragment
-                        .newInstance(mTodo.getDate());
+                DatePickerFragment dialog = DatePickerFragment.newInstance(mTodo.getDate());
                 dialog.setTargetFragment(TodoFragment.this, REQUEST_DATE);
                 dialog.show(fm, DIALOG_DATE);
             }
@@ -111,7 +110,7 @@ public class TodoFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
-        if (requestCode != Activity.RESULT_OK) return;
+        if (resultCode != Activity.RESULT_OK) return;
         if (requestCode == REQUEST_DATE) {
             Date date = (Date)data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
             mTodo.setDate(date);
