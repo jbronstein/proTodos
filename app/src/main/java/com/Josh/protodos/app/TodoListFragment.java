@@ -40,8 +40,8 @@ public class TodoListFragment extends ListFragment {
     public void onListItemClick(ListView l, View v, int position, long id){
         Todo t = ((TodoAdapter)getListAdapter()).getItem(position);
 
-        //start TodoActivity
-        Intent i = new Intent(getActivity(), MainActivity.class);
+        //start Todo_Pager_Activity
+        Intent i = new Intent(getActivity(), TodoPagerActivity.class);
         i.putExtra(TodoFragment.EXTRA_TODO_ID, t.getID());
         startActivity(i);
 
@@ -63,6 +63,10 @@ public class TodoListFragment extends ListFragment {
             TextView titleTextView =
                     (TextView)convertView.findViewById(R.id.todo_list_item_titleTextView);
             titleTextView.setText(t.getTitle());
+
+            TextView dateTextView =
+                    (TextView)convertView.findViewById(R.id.todo_list_item_dateTextView);
+            dateTextView.setText(t.getDate().toString());
 
             CheckBox solvedCheckBox =
                     (CheckBox)convertView.findViewById(R.id.todo_list_item_solvedCheckBox);
