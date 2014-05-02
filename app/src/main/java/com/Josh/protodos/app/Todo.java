@@ -14,6 +14,7 @@ public class Todo {
     private Date mDate;
     private Boolean mSolved;
 
+    //Todo_Constructor
     public Todo(){
            //generate unique identifier
         mId = UUID.randomUUID();

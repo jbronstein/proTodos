@@ -15,6 +15,7 @@ public class TodoList {
     private static TodoList sTodoList;
     private Context mAppContext;
 
+    //Construct an arraylist of todo_objects
     public TodoList(Context appContext) {
         mAppContext = appContext;
         mTodos = new ArrayList<Todo>();
@@ -31,10 +32,15 @@ public class TodoList {
         mTodos.add(t);
     }
 
+    public void deleteTodo(Todo t){
+        mTodos.remove(t);
+    }
+
     public ArrayList<Todo> getTodos(){
         return mTodos;
     }
 
+    //Important: get the correct Todo_object from the array list
     public Todo getTodo(UUID id){
         for (Todo t : mTodos) {
             if (t.getID().equals(id))

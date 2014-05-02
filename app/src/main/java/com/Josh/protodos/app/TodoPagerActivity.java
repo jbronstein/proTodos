@@ -13,6 +13,8 @@ import java.util.UUID;
 /**
  * Created by Josh on 4/30/14.
  */
+
+//View Pager class
 public class TodoPagerActivity extends FragmentActivity {
     private ViewPager mViewPager;
     private ArrayList <Todo> mTodos;

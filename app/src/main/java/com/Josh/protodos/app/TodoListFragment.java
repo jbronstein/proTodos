@@ -6,14 +6,17 @@ import android.support.v4.app.ListFragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -51,6 +54,7 @@ public class TodoListFragment extends ListFragment {
 
     }
 
+    //inner todoAdapter class to properly present each todoFragment
     private class TodoAdapter extends ArrayAdapter<Todo> {
         public TodoAdapter(ArrayList<Todo> todos) {
             super(getActivity(), 0, todos);
@@ -68,12 +72,12 @@ public class TodoListFragment extends ListFragment {
                     (TextView)convertView.findViewById(R.id.todo_list_item_titleTextView);
             titleTextView.setText(t.getTitle());
 
-            CheckBox solvedCheckBox =
+            final CheckBox solvedCheckBox =
                     (CheckBox)convertView.findViewById(R.id.todo_list_item_solvedCheckBox);
             solvedCheckBox.setChecked(t.isSolved());
 
-            return convertView;
 
+            return convertView;
 
         }
 
@@ -106,6 +110,40 @@ public class TodoListFragment extends ListFragment {
                 return super.onOptionsItemSelected(item);
 
         }
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo MenuInfo) {
+        getActivity().getMenuInflater().inflate(R.menu.todo_list_item_context, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        int position = info.position;
+        TodoAdapter adapter = (TodoAdapter) getListAdapter();
+        Todo todo = adapter.getItem(position);
+
+        switch (item.getItemId()) {
+            case R.id.menu_item_delete_todo:
+                TodoList.get(getActivity()).deleteTodo(todo);
+                adapter.notifyDataSetChanged();
+                return true;
+            }
+
+        return super.onContextItemSelected(item);
+
+    }
+
+    //Add functionality to delete fragments and update the view
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup parent,
+                             Bundle savedInstanceState) {
+        View v = super.onCreateView(inflater, parent, savedInstanceState);
+
+        ListView listView = (ListView)v.findViewById(android.R.id.list);
+        registerForContextMenu(listView);
+        return v;
     }
 
 

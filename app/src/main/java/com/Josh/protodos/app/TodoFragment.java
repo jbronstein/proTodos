@@ -37,7 +37,7 @@ public class TodoFragment extends Fragment {
     private Button mDateButton;
     private CheckBox mSolvedCheckBox;
 
-
+    //get the right fragment item for us to look at
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +47,7 @@ public class TodoFragment extends Fragment {
         mTodo = TodoList.get(getActivity()).getTodo(todoId);
     }
 
+    //new fragment instance
     public static TodoFragment newInstance(UUID todoId){
         Bundle args = new Bundle();
         args.putSerializable(EXTRA_TODO_ID, todoId);
@@ -61,6 +62,7 @@ public class TodoFragment extends Fragment {
         mDateButton.setText(mTodo.getDate().toString());
     }
 
+    //Main View method, generate the title, details, dialog date, and checkbox
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_todo, parent, false);

@@ -26,6 +26,7 @@ public class DatePickerFragment extends DialogFragment {
 
     private Date mDate;
 
+
     public static DatePickerFragment newInstance(Date date){
         Bundle args = new Bundle();
         args.putSerializable(EXTRA_DATE, date);
@@ -36,6 +37,7 @@ public class DatePickerFragment extends DialogFragment {
         return fragment;
     }
 
+    //pass the chosen date to the todo_fragment
     private void sendResult(int resultCode){
         if (getTargetFragment() == null)
             return;
@@ -47,7 +49,7 @@ public class DatePickerFragment extends DialogFragment {
                 .onActivityResult(getTargetRequestCode(), resultCode, i);
     }
 
-
+    //Generate the Dialog Date so user can choose correct date
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState){
         mDate = (Date)getArguments().getSerializable(EXTRA_DATE);
